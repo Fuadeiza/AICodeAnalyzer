@@ -5,9 +5,13 @@ AI Code Analyzer is a Python application that uses the Anthropic API to analyze 
 ## File Structure
 
 .
+├── LICENSE
+├── README.md
 ├── main.py
-├
-└── requirements.txt
+├── requirements.txt
+├── sample_code.py
+└── tests
+└── test_code_analyzer.py
 
 ## Prerequisites
 

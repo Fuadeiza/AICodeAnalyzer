@@ -2,6 +2,8 @@
 
 AI Code Analyzer is a Python application that uses the Anthropic API to analyze Python code and provide suggestions for improvement. It features a user-friendly GUI built with PyQt5, including syntax highlighting for Python code.
 
+![AI Code Analyzer Screenshot](https://raw.githubusercontent.com/Fuadeiza/AICodeAnalyzer/main/screenshots/ai_code_analyzer_screenshot.png)
+
 ## File Structure
 
 .

@@ -1,4 +1,4 @@
 venv/
 .env
 __pycache__/
-tests/__pycache__/test_code_analyzer.cpython-39-pytest-8.3.3.pyc
+tests/__pycache__/

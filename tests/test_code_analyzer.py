@@ -1,3 +1,5 @@
+pytest_plugins = ["pytest_mock"]
+
 import sys
 from pathlib import Path
 

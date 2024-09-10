@@ -1,13 +1,21 @@
-import sys
 import os
+import sys
+
 from anthropic import Anthropic
-from PyQt5.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, 
-                             QLabel, QPushButton, QTextEdit, QStatusBar, QSplitter)
-from PyQt5.QtGui import QFont, QColor, QPalette, QSyntaxHighlighter, QTextCharFormat
-from PyQt5.QtCore import Qt, QRegExp
-
-
 from dotenv import load_dotenv
+from PyQt5.QtCore import QRegExp, Qt
+from PyQt5.QtGui import QColor, QFont, QSyntaxHighlighter, QTextCharFormat
+from PyQt5.QtWidgets import (
+    QApplication,
+    QLabel,
+    QMainWindow,
+    QPushButton,
+    QSplitter,
+    QStatusBar,
+    QTextEdit,
+    QVBoxLayout,
+    QWidget,
+)
 
 load_dotenv()
 
@@ -18,6 +26,7 @@ if not ANTHROPIC_API_KEY:
 
 client = Anthropic(api_key=ANTHROPIC_API_KEY)
 
+
 class PythonHighlighter(QSyntaxHighlighter):
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -26,18 +35,35 @@ class PythonHighlighter(QSyntaxHighlighter):
         keyword_format = QTextCharFormat()
         keyword_format.setForeground(QColor("#FF7043"))
         keyword_format.setFontWeight(QFont.Bold)
-        keywords = ["def", "class", "for", "while", "if", "elif", "else", "try", "except", "import", "from", "as"]
+        keywords = [
+            "def",
+            "class",
+            "for",
+            "while",
+            "if",
+            "elif",
+            "else",
+            "try",
+            "except",
+            "import",
+            "from",
+            "as",
+        ]
         for word in keywords:
-            self.highlightingRules.append((QRegExp("\\b" + word + "\\b"), keyword_format))
+            self.highlightingRules.append(
+                (QRegExp("\\b" + word + "\\b"), keyword_format)
+            )
 
         function_format = QTextCharFormat()
         function_format.setFontItalic(True)
         function_format.setForeground(QColor("#42A5F5"))
-        self.highlightingRules.append((QRegExp("\\b[A-Za-z0-9_]+(?=\\()"), function_format))
+        self.highlightingRules.append(
+            (QRegExp("\\b[A-Za-z0-9_]+(?=\\()"), function_format)
+        )
 
         string_format = QTextCharFormat()
         string_format.setForeground(QColor("#66BB6A"))
-        self.highlightingRules.append((QRegExp("\".*\""), string_format))
+        self.highlightingRules.append((QRegExp('".*"'), string_format))
         self.highlightingRules.append((QRegExp("'.*'"), string_format))
 
         comment_format = QTextCharFormat()
@@ -53,12 +79,14 @@ class PythonHighlighter(QSyntaxHighlighter):
                 self.setFormat(index, length, format)
                 index = expression.indexIn(text, index + length)
 
+
 class CodeAnalyzerWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("AI Code Analyzer")
         self.setGeometry(100, 100, 1000, 800)
-        self.setStyleSheet("""
+        self.setStyleSheet(
+            """
             QMainWindow {
                 background-color: #263238;
             }
@@ -87,7 +115,8 @@ class CodeAnalyzerWindow(QMainWindow):
                 font-family: Consolas, Monaco, monospace;
                 font-size: 12px;
             }
-        """)
+        """
+        )
 
         central_widget = QWidget()
         main_layout = QVBoxLayout()
@@ -101,7 +130,7 @@ class CodeAnalyzerWindow(QMainWindow):
         input_widget = QWidget()
         input_layout = QVBoxLayout()
         input_widget.setLayout(input_layout)
-        
+
         input_label = QLabel("Enter Python code:")
         self.code_input = QTextEdit()
         self.highlighter = PythonHighlighter(self.code_input.document())
@@ -148,10 +177,10 @@ class CodeAnalyzerWindow(QMainWindow):
                 system="You are a helpful assistant that analyzes Python code.",
                 messages=[
                     {
-                        "role": "user", 
-                        "content": f"Analyze this Python code and provide suggestions for improvement:\n\n{code}"
+                        "role": "user",
+                        "content": f"Analyze this Python code and provide suggestions for improvement:\n\n{code}",
                     }
-                ]
+                ],
             )
             analysis = response.content[0].text
             self.result_output.setPlainText(analysis)
@@ -159,6 +188,7 @@ class CodeAnalyzerWindow(QMainWindow):
         except Exception as e:
             self.result_output.setPlainText(f"An error occurred: {str(e)}")
             self.statusBar.showMessage("Error occurred during analysis", 3000)
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

@@ -6,6 +6,7 @@ AI Code Analyzer is a Python application that uses the Anthropic API to analyze 
 
 .
 ├── main.py
+├
 └── requirements.txt
 
 ## Prerequisites

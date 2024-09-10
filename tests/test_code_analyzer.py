@@ -22,13 +22,14 @@ def app(qapp):
 
 # Fixture for CodeAnalyzerWindow
 @pytest.fixture(scope="function")
-def window(app, mocker):
+def window(qtbot, mocker):
     # Mock the Anthropic client
     mock_response = mocker.Mock()
     mock_response.content = [mocker.Mock(text="Mocked analysis result")]
     mocker.patch.object(client.messages, "create", return_value=mock_response)
-    return CodeAnalyzerWindow()
-
+    window = CodeAnalyzerWindow()
+    qtbot.addWidget(window)
+    return window
 
 def test_window_title(window):
     assert window.windowTitle() == "AI Code Analyzer"

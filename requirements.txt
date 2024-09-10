@@ -45,3 +45,4 @@ tomli==2.0.1
 tqdm==4.66.5
 typing_extensions==4.12.2
 urllib3==2.2.2
+xvfbwrapper==0.2.9

@@ -31,6 +31,7 @@ def window(qtbot, mocker):
     qtbot.addWidget(window)
     return window
 
+
 def test_window_title(window):
     assert window.windowTitle() == "AI Code Analyzer"
 

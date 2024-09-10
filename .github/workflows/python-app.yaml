@@ -31,6 +31,7 @@ jobs:
     - name: Test with pytest
       env:
         ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        QT_QPA_PLATFORM: offscreen
       run: |
         sudo apt-get install -y xvfb
-        xvfb-run --auto-servernum pytest
+        xvfb-run --auto-servernum pytest tests/test_code_analyzer.py
